@@ -1,12 +1,11 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
 import { StripeProvider } from '@stripe/stripe-react-native';
+import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { AuthProvider } from '../data/auth';
-import { CustomerProvider } from '../data/customer';
 import { DriverProvider } from '../data/driver';
 import { TripProvider } from '../data/trip';
 
@@ -24,19 +23,10 @@ export default function RootLayout() {
     >
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <AuthProvider>
-        <CustomerProvider>
           <DriverProvider>
             <TripProvider>
               <Stack>
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen
-                  name="modal"
-                  options={{ presentation: 'modal', title: 'Modal' }}
-                />
-                <Stack.Screen
-                  name="customer_account"
-                  options={{ headerShown: false }}
-                />
                 <Stack.Screen
                   name="driver_account"
                   options={{ headerShown: false }}
@@ -48,7 +38,6 @@ export default function RootLayout() {
               </Stack>
             </TripProvider>
           </DriverProvider>
-        </CustomerProvider>
       </AuthProvider>
       <StatusBar style="auto" />
     </ThemeProvider>

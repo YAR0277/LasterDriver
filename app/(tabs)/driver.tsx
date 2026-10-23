@@ -440,7 +440,7 @@ export default function DriverScreen() {
         {driverLoading ? null : hasAccount ? (
           <View style={driverStyles.availabilityRow}>
             <Text style={driverStyles.availabilityText}>
-              I'm available to receive trips
+              I&apos;m available to receive trips
             </Text>
 
             <Switch

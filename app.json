@@ -1,17 +1,19 @@
 {
   "expo": {
-    "name": "Laster",
-    "slug": "Laster",
+    "name": "LasterDriver",
+    "slug": "laster-driver",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "laster",
+    "scheme": "lasterdriver",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.laster.driver"
     },
     "android": {
+      "package": "com.laster.driver",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",

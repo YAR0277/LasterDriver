@@ -7,10 +7,8 @@ import {
   useState
 } from 'react';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from '../lib/supabase';
 import { useAuth } from './auth';
-import { useCustomer } from './customer';
 import { useDriver } from './driver';
 
 export type TripStatus =
@@ -60,8 +58,7 @@ type TripContextType = {
 const TripContext = createContext<TripContextType | undefined>(undefined);
 
 export function TripProvider({ children }: { children: ReactNode }) {
-  const { user: supabaseAuthUser, loading: authLoading } = useAuth();
-  const { customer } = useCustomer();
+  const { loading: authLoading } = useAuth();
   const { driver, loading: driverLoading } = useDriver();
   const [trips, setTrips] = useState<Trip[]>([]);
 
@@ -75,28 +72,15 @@ export function TripProvider({ children }: { children: ReactNode }) {
       .select('*')
       .order('trip_id', { ascending: true });
 
-    if (driver) {
-      // Drivers see available Requested trips and their own trips.
-      query = query.or(
-        `status.eq.Requested,driver_id.eq.${driver.driverID}`
-      );
-    } else {
-      let customerID = customer?.customerID ?? null;
-
-      // Guest customer
-      if (!customerID && !supabaseAuthUser) {
-        customerID = await AsyncStorage.getItem(
-          'laster_guest_customer_id'
-        );
-      }
-
-      if (!customerID) {
-        setTrips([]);
-        return;
-      }
-
-      query = query.eq('customer_id', customerID);
+    if (!driver) {
+      setTrips([]);
+      return;
     }
+
+    // Drivers see available Requested trips and their own trips.
+    query = query.or(
+      `status.eq.Requested,driver_id.eq.${driver.driverID}`
+    );
 
     const { data, error } = await query;
 
@@ -142,8 +126,6 @@ export function TripProvider({ children }: { children: ReactNode }) {
     authLoading,
     driverLoading,
     driver,
-    customer,
-    supabaseAuthUser,
   ]);
 
   useEffect(() => {
