@@ -18,12 +18,14 @@ export type Driver = {
   make: string;
   model: string;
   year: string;
+  vinNumber: string;
   truckPhoto: string;
   licenseNumber: string;
   licenseState: string;
   dateOfBirth: string;
   insurancePolicy: string;
   insuranceCompany: string;
+  insuranceExpirationDate: string;
   rating: number | null;
   numberOfRatings: number;
   numberOfTrips: number;
@@ -77,12 +79,14 @@ export function DriverProvider({ children }: { children: ReactNode }) {
         make: data.make,
         model: data.model,
         year: data.year,
+        vinNumber: data.vin_number,
         truckPhoto: data.truck_photo,
         licenseNumber: data.license_number,
         licenseState: data.license_state,
         dateOfBirth: data.date_of_birth,
         insurancePolicy: data.insurance_policy,
         insuranceCompany: data.insurance_company,
+        insuranceExpirationDate: data.insurance_expiration_date,
         rating: data.rating,
         numberOfRatings: data.number_of_ratings,
         numberOfTrips: data.number_of_trips,

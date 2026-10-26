@@ -28,10 +28,6 @@ export default function RootLayout() {
               <Stack>
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                 <Stack.Screen
-                  name="driver_account"
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
                   name="settings"
                   options={{ headerShown: false }}
                 />

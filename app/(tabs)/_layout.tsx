@@ -1,3 +1,4 @@
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Tabs } from 'expo-router';
 import React from 'react';
 
@@ -11,7 +12,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      initialRouteName="driver"
+      initialRouteName="index"
       screenOptions={{
         headerShown: false,
         tabBarButton: HapticTab,
@@ -21,11 +22,33 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
+        name="index"
+        options={{
+          title: 'Home',
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="house.fill" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="driver"
         options={{
-          title: 'Driver',
+          title: 'Drive',
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="car-pickup" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="driver_account"
+        options={{
+          title: 'Account',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="account-outline"
+              size={26}
+              color={color}
+            />
           ),
         }}
       />

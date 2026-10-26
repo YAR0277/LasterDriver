@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F59E0B',
+    backgroundColor: '#414752',
     marginBottom: 12,
   },
 
@@ -71,7 +71,7 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#555C68',
+    backgroundColor: '#414752',
     marginBottom: 12,
   },
 
@@ -151,7 +151,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F59E0B',
+    backgroundColor: '#414752',
     paddingVertical: 10,
     borderRadius: 8,
     marginTop: 8,

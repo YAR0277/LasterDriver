@@ -406,13 +406,12 @@ export default function DriverScreen() {
         <View style={driverStyles.pageHeaderContent}>
           <View style={{ flex: 1, minWidth: 0 }}>
             <Text style={driverStyles.pageSubtitle}>
-              To view trips{"\n"}
-              Log in or{' '}
+              To view trips{' '}
               <Text
                 style={driverStyles.accountLink}
                 onPress={() => router.push('/driver_account')}
               >
-                open an account
+                Log in
               </Text>
             </Text>
           </View>

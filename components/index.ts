@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
   },
 
   headerTitle: {
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: '400',
     color: '#F5F5F5',
     marginLeft: 10,
@@ -129,11 +129,11 @@ export const styles = StyleSheet.create({
   },
 
   rentPickupButton: {
-    backgroundColor: '#8B5CF6',
+    backgroundColor: '#414752',
   },
 
   driveWithLasterButton: {
-    backgroundColor: '#F59E0B',
+    backgroundColor: '#414752',
   },
 
   quickButtonText: {

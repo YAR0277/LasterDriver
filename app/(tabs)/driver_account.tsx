@@ -15,12 +15,12 @@ import { File } from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-import { styles as commonStyles } from '../components/common';
-import { styles as accountStyles } from '../components/driver_account';
-import { useAuth } from '../data/auth';
-import { useDriver } from '../data/driver';
-import { useTrip } from '../data/trip';
-import { supabase } from '../lib/supabase';
+import { styles as commonStyles } from '../../components/common';
+import { styles as accountStyles } from '../../components/driver_account';
+import { useAuth } from '../../data/auth';
+import { useDriver } from '../../data/driver';
+import { useTrip } from '../../data/trip';
+import { supabase } from '../../lib/supabase';
 
 export default function DriverAccountScreen() {
   const router = useRouter();
@@ -35,6 +35,7 @@ export default function DriverAccountScreen() {
   const [make, setMake] = useState('');
   const [model, setModel] = useState('');
   const [year, setYear] = useState('');
+  const [vinNumber, setVinNumber] = useState('');
   const [truckPhoto, setTruckPhoto] = useState<string | null>(
     driver?.truckPhoto || null
   );  
@@ -43,6 +44,7 @@ export default function DriverAccountScreen() {
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [insurancePolicy, setInsurancePolicy] = useState('');
   const [insuranceCompany, setInsuranceCompany] = useState('');
+  const [insuranceExpirationDate, setInsuranceExpirationDate] = useState('');
   const [accountMode, setAccountMode] =
     useState<'login' | 'open'>('login');
   const hasAccount = supabaseAuthUser !== null && driver !== null;
@@ -100,12 +102,14 @@ export default function DriverAccountScreen() {
       setMake(driver.make);
       setModel(driver.model);
       setYear(driver.year);
+      setVinNumber(driver.vinNumber);
       setTruckPhoto(driver.truckPhoto);
       setLicenseNumber(driver.licenseNumber);
       setLicenseState(driver.licenseState);
       setDateOfBirth(driver.dateOfBirth);
       setInsurancePolicy(driver.insurancePolicy);
       setInsuranceCompany(driver.insuranceCompany);
+      setInsuranceExpirationDate(driver.insuranceExpirationDate);
     } else {
       setFirstName('');
       setLastName('');
@@ -114,12 +118,14 @@ export default function DriverAccountScreen() {
       setMake('');
       setModel('');
       setYear('');
+      setVinNumber('');
       setTruckPhoto('');
       setLicenseNumber('');
       setLicenseState('');
       setDateOfBirth('');
       setInsurancePolicy('');
       setInsuranceCompany('');
+      setInsuranceExpirationDate('');
     }
   }, [driver]);
 
@@ -263,12 +269,14 @@ export default function DriverAccountScreen() {
         make,
         model,
         year,
+        vin_number: vinNumber,
         truck_photo: truckPhotoUrl,
         license_number: licenseNumber,
         license_state: licenseState,
         date_of_birth: dateOfBirth,
         insurance_policy: insurancePolicy,
         insurance_company: insuranceCompany,
+        insurance_expiration_date: insuranceExpirationDate,
         rating: null,
         number_of_ratings: 0,
         number_of_trips: 0,
@@ -304,12 +312,14 @@ export default function DriverAccountScreen() {
       make,
       model,
       year,
+      vinNumber,
       truckPhoto: truckPhotoUrl,
       licenseNumber,
       licenseState,
       dateOfBirth,
       insurancePolicy,
       insuranceCompany,
+      insuranceExpirationDate,
       rating: null,
       numberOfRatings: 0,
       numberOfTrips: 0,
@@ -350,6 +360,7 @@ export default function DriverAccountScreen() {
         email,
         make,
         model,
+        vin_number: vinNumber,
         year,
         truck_photo: truckPhotoUrl,
         license_number: licenseNumber,
@@ -357,6 +368,7 @@ export default function DriverAccountScreen() {
         date_of_birth: dateOfBirth,
         insurance_policy: insurancePolicy,
         insurance_company: insuranceCompany,
+        insurance_expiration_date: insuranceExpirationDate,
       })
       .eq('driver_id', driver.driverID);
 
@@ -391,6 +403,7 @@ export default function DriverAccountScreen() {
       email,
       make,
       model,
+      vinNumber,
       year,
       truckPhoto: truckPhotoUrl,
       licenseNumber,
@@ -398,6 +411,7 @@ export default function DriverAccountScreen() {
       dateOfBirth,
       insurancePolicy,
       insuranceCompany,
+      insuranceExpirationDate,
     });
 
     Alert.alert(
@@ -492,15 +506,11 @@ export default function DriverAccountScreen() {
     const { error } = await supabase.auth.signOut();
 
     if (error) {
-      Alert.alert(
-        'Logout Error',
-        error.message
-      );
+      Alert.alert('Logout Error', error.message);
       return;
     }
 
     setDriver(null);
-    router.replace('/(tabs)/driver');
   };
 
   const setUpPayouts = async () => {
@@ -542,7 +552,7 @@ export default function DriverAccountScreen() {
     } finally {
       setPayoutLoading(false);
     }
-  };  
+  };     
   return (
     <ScrollView
       style={commonStyles.container}
@@ -600,8 +610,6 @@ export default function DriverAccountScreen() {
 
       {/* Login */}
       <View style={accountStyles.section}>
-        <Text style={accountStyles.sectionTitle}>Login</Text>
-
         <Text style={accountStyles.fieldLabel}>Email</Text>
         <TextInput
           style={accountStyles.input}
@@ -668,7 +676,6 @@ export default function DriverAccountScreen() {
         </Text>
 
         <Text style={accountStyles.fieldLabel}>Make</Text>
-
         <TextInput
           style={accountStyles.input}
           placeholder="Enter truck make"
@@ -678,7 +685,6 @@ export default function DriverAccountScreen() {
         />
 
         <Text style={accountStyles.fieldLabel}>Model</Text>
-
         <TextInput
           style={accountStyles.input}
           placeholder="Enter truck model"
@@ -688,7 +694,6 @@ export default function DriverAccountScreen() {
         />
 
         <Text style={accountStyles.fieldLabel}>Year</Text>
-
         <TextInput
           style={accountStyles.input}
           placeholder="Enter truck year"
@@ -698,8 +703,18 @@ export default function DriverAccountScreen() {
           keyboardType="number-pad"
         />
 
-        <Text style={accountStyles.fieldLabel}>Truck Photo</Text>
+        <Text style={accountStyles.fieldLabel}>VIN Number</Text>
+        <TextInput
+          style={accountStyles.input}
+          placeholder="Enter VIN"
+          placeholderTextColor="#8F96A3"
+          value={vinNumber}
+          onChangeText={setVinNumber}
+          autoCapitalize="characters"
+          maxLength={17}
+        />
 
+        <Text style={accountStyles.fieldLabel}>Truck Photo</Text>
         <Pressable
           style={accountStyles.photoButton}
           onPress={pickTruckPhoto}
@@ -722,10 +737,10 @@ export default function DriverAccountScreen() {
       {/* License */}
       {(hasAccount || accountMode === 'open') && (
         <View style={accountStyles.section}>
-        <Text style={accountStyles.sectionTitle}>License</Text>
+        <Text style={accountStyles.sectionTitle}>Driver's License</Text>
 
         <Text style={accountStyles.fieldLabel}>
-          License Number
+          Number
         </Text>
 
         <TextInput
@@ -767,10 +782,16 @@ export default function DriverAccountScreen() {
         <View style={accountStyles.section}>
         <Text style={accountStyles.sectionTitle}>Insurance</Text>
 
-        <Text style={accountStyles.fieldLabel}>
-          Policy Number
-        </Text>
+        <Text style={accountStyles.fieldLabel}>Company</Text>
+        <TextInput
+          style={accountStyles.input}
+          placeholder="Enter insurance company"
+          placeholderTextColor="#888"
+          value={insuranceCompany}
+          onChangeText={setInsuranceCompany}
+        />
 
+        <Text style={accountStyles.fieldLabel}>Policy Number</Text>
         <TextInput
           style={accountStyles.input}
           placeholder="Enter policy number"
@@ -779,16 +800,15 @@ export default function DriverAccountScreen() {
           onChangeText={setInsurancePolicy}
         />
 
-        <Text style={accountStyles.fieldLabel}>
-          Insurance Company
-        </Text>
-
+        <Text style={accountStyles.fieldLabel}>Expiration Date</Text>
         <TextInput
           style={accountStyles.input}
-          placeholder="Enter insurance company"
-          placeholderTextColor="#888"
-          value={insuranceCompany}
-          onChangeText={setInsuranceCompany}
+          placeholder="MM/DD/YYYY"
+          placeholderTextColor="#8F96A3"
+          value={insuranceExpirationDate}
+          onChangeText={setInsuranceExpirationDate}
+          keyboardType="numbers-and-punctuation"
+          maxLength={10}
         />
       </View>
       )}
