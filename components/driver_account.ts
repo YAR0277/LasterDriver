@@ -27,11 +27,18 @@ export const styles = StyleSheet.create({
     marginBottom: 16,
   },
 
+  sectionHeading: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginBottom: 18,
+  },
+
   sectionTitle: {
     fontSize: 21,
     fontWeight: '500',
     color: '#F5F5F5',
-    marginBottom: 18,
+    marginBottom: 0,
   },
 
   fieldLabel: {
@@ -53,11 +60,63 @@ export const styles = StyleSheet.create({
     marginBottom: 16,
   },
 
+  accountActionsSection: {
+    marginTop: 6,
+    padding: 16,
+    borderRadius: 16,
+    backgroundColor: '#303641',
+    borderWidth: 1,
+    borderColor: '#454B55',
+  },
+  accountActionsTitle: {
+    fontSize: 18,
+    fontWeight: '500',
+    color: '#F5F5F5',
+    marginBottom: 12,
+  },
+  deleteActionRow: {
+    backgroundColor: '#8A3F3F',
+    borderColor: '#8A3F3F',
+    marginBottom: 0,
+  },  
+
   actions: {
     marginBottom: 30,
   },
 
+  actionRow: {
+    minHeight: 56,
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#303641',
+    borderWidth: 1,
+    borderColor: '#454B55',
+    marginBottom: 10,
+  },
+  actionRowLabel: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  actionRowText: {
+    color: '#F5F5F5',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+
+  payoutDescription: {
+    color: '#B8BEC8',
+    fontSize: 14,
+    lineHeight: 21,
+    marginBottom: 16,
+  },
+
   primaryButton: {
+    flexDirection: 'row',
+    gap: 10,    
     minHeight: 50,
     borderRadius: 10,
     alignItems: 'center',

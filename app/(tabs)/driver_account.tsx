@@ -1,3 +1,4 @@
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -636,7 +637,14 @@ export default function DriverAccountScreen() {
       {/* Contact */}
       {(hasAccount || accountMode === 'open') && (
         <View style={accountStyles.section}>
-          <Text style={accountStyles.sectionTitle}>Contact</Text>
+          <View style={accountStyles.sectionHeading}>
+            <MaterialCommunityIcons
+              name="account-outline"
+              size={23}
+              color="#D8DCE3"
+            />
+            <Text style={accountStyles.sectionTitle}>Contact</Text>
+          </View>
 
           <Text style={accountStyles.fieldLabel}>First Name</Text>
           <TextInput
@@ -671,9 +679,14 @@ export default function DriverAccountScreen() {
       {/* Pickup Truck */}
       {(hasAccount || accountMode === 'open') && (
         <View style={accountStyles.section}>
-        <Text style={accountStyles.sectionTitle}>
-          Pickup Truck
-        </Text>
+        <View style={accountStyles.sectionHeading}>
+          <MaterialCommunityIcons
+            name="car-pickup"
+            size={23}
+            color="#D8DCE3"
+          />
+          <Text style={accountStyles.sectionTitle}>Pickup Truck</Text>
+        </View>        
 
         <Text style={accountStyles.fieldLabel}>Make</Text>
         <TextInput
@@ -734,10 +747,18 @@ export default function DriverAccountScreen() {
       </View>
       )}
 
-      {/* License */}
+      {/* Driver's License */}
       {(hasAccount || accountMode === 'open') && (
         <View style={accountStyles.section}>
-        <Text style={accountStyles.sectionTitle}>Driver's License</Text>
+        <View style={accountStyles.sectionHeading}>
+          <MaterialCommunityIcons
+            name="card-account-details-outline"
+            size={23}
+            color="#D8DCE3"
+          />
+          <Text style={accountStyles.sectionTitle}>Driver's License</Text>
+        </View>
+
 
         <Text style={accountStyles.fieldLabel}>
           Number
@@ -780,7 +801,14 @@ export default function DriverAccountScreen() {
       {/* Insurance */}
       {(hasAccount || accountMode === 'open') && (
         <View style={accountStyles.section}>
-        <Text style={accountStyles.sectionTitle}>Insurance</Text>
+        <View style={accountStyles.sectionHeading}>
+          <MaterialCommunityIcons
+            name="shield-check-outline"
+            size={23}
+            color="#D8DCE3"
+          />
+          <Text style={accountStyles.sectionTitle}>Insurance</Text>
+        </View>
 
         <Text style={accountStyles.fieldLabel}>Company</Text>
         <TextInput
@@ -813,11 +841,74 @@ export default function DriverAccountScreen() {
       </View>
       )}
 
+      {/* Update Account */}
+      {hasAccount && (
+        <View style={accountStyles.actions}>
+          <Pressable
+            style={accountStyles.primaryButton}
+            onPress={updateAccount}
+          >
+            <MaterialCommunityIcons
+              name="content-save-outline"
+              size={21}
+              color="#FFFFFF"
+            />
+            <Text style={accountStyles.buttonText}>
+              Update Account
+            </Text>
+          </Pressable>
+        </View>
+      )}
+
+      {/* Payout Settings */}
+      {hasAccount && (
+        <View style={accountStyles.section}>
+          <View style={accountStyles.sectionHeading}>
+            <MaterialCommunityIcons
+              name="wallet-outline"
+              size={23}
+              color="#D8DCE3"
+            />
+            <Text style={accountStyles.sectionTitle}>
+              Payout Settings
+            </Text>
+          </View>
+
+          <Text style={accountStyles.payoutDescription}>
+            Set up your payout account with our payment provider
+            to receive payments from Laster. Your driver application
+            is not complete until you finish this setup.
+          </Text>
+
+          <Pressable
+            style={accountStyles.actionRow}
+            onPress={setUpPayouts}
+            disabled={payoutLoading}
+          >
+            <Text style={accountStyles.actionRowText}>
+              {payoutLoading ? 'Opening Payout Settings...' : 'Set Up Payouts'}
+            </Text>
+            <MaterialCommunityIcons
+              name="chevron-right"
+              size={24}
+              color="#8F96A3"
+            />
+          </Pressable>
+        </View>
+      )}
+
       {/* Rating */}
       {hasAccount && driver?.rating != null && (
         <View style={accountStyles.section}>
-          <Text style={accountStyles.sectionTitle}>Rating</Text>
-
+          {/* <Text style={accountStyles.sectionTitle}>Rating</Text> */}
+          <View style={accountStyles.sectionHeading}>
+            <MaterialCommunityIcons
+              name="star"
+              size={23}
+              color="#E7B94C"
+            />
+            <Text style={accountStyles.sectionTitle}>Rating</Text>
+          </View>
           <Text style={accountStyles.fieldLabel}>
             {driver.rating.toFixed(1)} / 5
           </Text>
@@ -827,9 +918,15 @@ export default function DriverAccountScreen() {
       {/* Trip History */}
       {hasAccount && (
         <View style={accountStyles.section}>
-          <Text style={accountStyles.sectionTitle}>
-            Trip History
-          </Text>
+          {/* <Text style={accountStyles.sectionTitle}>Trip History</Text> */}
+          <View style={accountStyles.sectionHeading}>
+            <MaterialCommunityIcons
+              name="history"
+              size={23}
+              color="#D8DCE3"
+            />
+            <Text style={accountStyles.sectionTitle}>Trip History</Text>
+          </View>
 
           {driverTrips.length === 0 ? (
             <Text style={accountStyles.emptyText}>
@@ -912,42 +1009,61 @@ export default function DriverAccountScreen() {
         </>
       ) : (
           <>
-            <Pressable
-              style={accountStyles.primaryButton}
-              onPress={setUpPayouts}
-              disabled={payoutLoading}
-            >
-              <Text style={accountStyles.buttonText}>
-                {payoutLoading ? 'Opening Payout Setup...' : 'Set Up Payouts'}
-              </Text>
-            </Pressable>
+            {/* Account Actions / Login */}
+            <View style={accountStyles.actions}>
+              {!hasAccount ? (
+                accountMode === 'login' ? (
+                  <Pressable
+                    style={accountStyles.primaryButton}
+                    onPress={login}
+                  >
+                    <Text style={accountStyles.buttonText}>Login</Text>
+                  </Pressable>
+                ) : (
+                  <Pressable
+                    style={accountStyles.primaryButton}
+                    onPress={openAccount}
+                  >
+                    <Text style={accountStyles.buttonText}>Open</Text>
+                  </Pressable>
+                )
+              ) : (
+                <View style={accountStyles.actions}>
+                  <Pressable
+                    style={accountStyles.actionRow}
+                    onPress={logout}
+                  >
+                    <View style={accountStyles.actionRowLabel}>
+                      <MaterialCommunityIcons
+                        name="logout"
+                        size={22}
+                        color="#D8DCE3"
+                      />
+                      <Text style={accountStyles.actionRowText}>Log Out</Text>
+                    </View>
+                  </Pressable>
 
-            <Pressable
-              style={accountStyles.primaryButton}
-              onPress={logout}
-            >
-              <Text style={accountStyles.buttonText}>
-                Logout
-              </Text>
-            </Pressable>
-
-            <Pressable
-              style={accountStyles.primaryButton}
-              onPress={updateAccount}
-            >
-              <Text style={accountStyles.buttonText}>
-                Update Account
-              </Text>
-            </Pressable>
-
-            <Pressable
-              style={accountStyles.deleteButton}
-              onPress={deleteAccount}
-            >
-              <Text style={accountStyles.buttonText}>
-                Delete Account
-              </Text>
-            </Pressable>
+                  <Pressable
+                    style={[
+                      accountStyles.actionRow,
+                      accountStyles.deleteActionRow,
+                    ]}
+                    onPress={deleteAccount}
+                  >
+                    <View style={accountStyles.actionRowLabel}>
+                      <MaterialCommunityIcons
+                        name="trash-can-outline"
+                        size={22}
+                        color="#FFFFFF"
+                      />
+                      <Text style={accountStyles.actionRowText}>
+                        Delete Account
+                      </Text>
+                    </View>
+                  </Pressable>
+                </View>
+              )}
+            </View>
           </>
         )}
       </View>
