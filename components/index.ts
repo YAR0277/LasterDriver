@@ -180,10 +180,11 @@ export const styles = StyleSheet.create({
   },
 
   menuItem: {
-    minHeight: 48,
-    justifyContent: 'center',
-    paddingHorizontal: 14,
-    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 0,
+    gap: 12,    
   },
 
   menuItemText: {
