@@ -120,13 +120,15 @@ export default function HomeScreen() {
         onPress={() => setMenuVisible(false)}
     >
         <Pressable
-        style={{
+          style={{
             width: 270,
+            alignSelf: 'flex-start',
             backgroundColor: '#303641',
-            padding: 24,
-            paddingTop: 60,
-        }}
-        onPress={(event) => event.stopPropagation()}
+            paddingHorizontal: 16,
+            paddingTop: 20,
+            paddingBottom: 12,
+          }}
+          onPress={(event) => event.stopPropagation()}
         >
         <Text
             style={{
